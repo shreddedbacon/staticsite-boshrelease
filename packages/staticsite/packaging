@@ -1,0 +1,7 @@
+set -e
+
+echo "Moving index.html to install target"
+cp -a static/index.html ${BOSH_INSTALL_TARGET}
+
+echo "Extract bootsrap resources into target"
+unzip static/bootstrap-4.1.3-dist.zip -d ${BOSH_INSTALL_TARGET}

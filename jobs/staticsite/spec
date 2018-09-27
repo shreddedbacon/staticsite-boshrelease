@@ -1,0 +1,13 @@
+---
+name: staticsite
+
+templates:
+  pre-start.sh: bin/pre-start
+
+packages:
+  - staticsite
+
+properties:
+  docroot:
+    description: Nginx docroot
+    default: /var/vcap/store/nginx/www/document_root

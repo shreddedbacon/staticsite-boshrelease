@@ -1,0 +1,8 @@
+---
+name: staticsite
+
+dependencies: []
+
+files:
+  - static/index.html
+  - static/bootstrap-4.1.3-dist.zip

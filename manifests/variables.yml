@@ -1,0 +1,7 @@
+staticsite_domain: staticsite.demo
+staticsite_docroot: /var/vcap/store/nginx/www/document_root
+staticsite_http_port: 80
+nginx_config: |
+  location / {
+    try_files $uri $uri/ =404;
+  }

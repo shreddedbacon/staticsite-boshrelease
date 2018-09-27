@@ -1,0 +1,48 @@
+---
+name: static-web
+
+releases:
+- name: staticsite-boshrelease
+  version: latest
+- name: nginx
+  version: latest
+
+stemcells:
+- alias: default
+  os: ubuntu-xenial
+  version: latest
+
+instance_groups:
+- name: webserver
+  instances: 1
+  stemcell: default
+  vm_type: default
+  azs: [z1]
+  persistent_disk_type: default
+  networks:
+  - name: default
+  jobs:
+  - name: staticsite
+    release: staticsite-boshrelease
+    properties:
+      docroot: ((staticsite_docroot))
+  - name: nginx
+    release: nginx
+    properties:
+      nginx_worker_processes: auto
+      nginx_worker_connections: 1024
+      nginx_servers:
+      - server_name: ((staticsite_domain))
+        docroot: ((staticsite_docroot))
+        port: ((staticsite_http_port))
+        index: "index.html"
+        access_log: /var/vcap/sys/log/nginx/access.log
+        error_log: /var/vcap/sys/log/nginx/error.log
+        custom_data: ((nginx_config))
+
+update:
+  canaries: 1
+  max_in_flight: 1
+  serial: false
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
